@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AI Knowledge Hub helps learners explore Machine Learning, Deep Learning, NLP, and Data Science with clear study notes and learning resources." />
+  <title>AI Knowledge Hub | Learn. Create. Grow.</title>
+  <style>
+    :root {
+      --navy: #071329;
+      --navy-2: #0b1b3a;
+      --blue: #4778ff;
+      --purple: #9b5cff;
+      --ink: #111c35;
+      --muted: #61708e;
+      --surface: #ffffff;
+      --page: #f4f7fc;
+      --line: #e5eaf4;
+      --shadow: 0 16px 45px rgba(22, 42, 83, .10);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--page);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    .container { width: min(1180px, calc(100% - 40px)); margin-inline: auto; }
+    header {
+      position: sticky; top: 0; z-index: 20;
+      color: #fff; background: rgba(5, 15, 33, .96);
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(14px);
+    }
+    .nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.15rem; letter-spacing: -.4px; white-space: nowrap; }
+    .brand-mark {
+      width: 42px; height: 42px; display: grid; place-items: center;
+      color: #fff; border-radius: 13px; background: linear-gradient(135deg, var(--blue), var(--purple));
+      box-shadow: 0 7px 24px rgba(71,120,255,.3); font-size: 1.35rem;
+    }
+    .brand small { display: block; color: #aab8d4; font-size: .7rem; font-weight: 500; letter-spacing: 1.3px; }
+    .nav-links { display: flex; align-items: center; gap: 27px; color: #d9e2f6; font-size: .92rem; }
+    .nav-links a:hover, .nav-links a.active { color: #76a0ff; }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .btn {
+      border: 0; border-radius: 999px; padding: 11px 20px; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      font-weight: 700; transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { color: #fff; background: linear-gradient(120deg, var(--blue), #6c61f6); box-shadow: 0 9px 22px rgba(71,120,255,.25); }
+    .btn-outline { color: #fff; background: transparent; border: 1px solid #6b83b4; }
+    .menu-toggle { display: none; color: #fff; background: transparent; border: 1px solid #344768; border-radius: 10px; padding: 8px 11px; }
+    .hero {
+      overflow: hidden; position: relative; color: #fff;
+      background: radial-gradient(ellipse at 78% 44%, rgba(34, 94, 220, .35), transparent 34%),
+                  radial-gradient(ellipse at 98% 10%, rgba(125, 48, 191, .22), transparent 30%),
+                  linear-gradient(115deg, #071329 0%, #091a38 56%, #15132e 100%);
+    }
+    .hero::after {
+      content: ""; position: absolute; width: 520px; height: 520px; right: -200px; bottom: -350px;
+      border: 1px solid rgba(116,153,255,.18); border-radius: 50%;
+      box-shadow: 0 0 0 45px rgba(116,153,255,.035), 0 0 0 90px rgba(116,153,255,.025);
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 42px; padding-block: 76px 82px; position: relative; z-index: 1; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border: 1px solid rgba(125,160,255,.3); background: rgba(75,115,220,.12); color: #b9ccff; border-radius: 999px; font-size: .8rem; font-weight: 700; }
+    .eyebrow span { width: 7px; height: 7px; background: #79a4ff; border-radius: 50%; box-shadow: 0 0 12px #79a4ff; }
+    h1 { margin: 20px 0 18px; max-width: 680px; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.06; letter-spacing: -2.6px; }
+    .gradient-text { background: linear-gradient(100deg, #61b4ff, #9c7bff 80%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero-copy { max-width: 600px; color: #c5d1e8; font-size: 1.08rem; }
+    .search-box { display: flex; gap: 10px; padding: 7px; max-width: 610px; margin: 27px 0 17px; background: rgba(255,255,255,.09); border: 1px solid rgba(178,200,255,.5); border-radius: 18px; }
+    .search-box input { min-width: 0; flex: 1; border: 0; outline: 0; padding: 10px 12px; color: #fff; background: transparent; }
+    .search-box input::placeholder { color: #b5c3df; }
+    .search-box button { border-radius: 13px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 9px; }
+    .tag { border: 1px solid #435679; border-radius: 999px; color: #dce5f7; padding: 5px 12px; font-size: .78rem; background: rgba(255,255,255,.025); }
+    .tag:hover { border-color: #7da0ff; background: rgba(71,120,255,.15); }
+    .hero-art { min-height: 350px; display: grid; place-items: center; position: relative; }
+    .orbit { position: absolute; width: min(100%, 440px); aspect-ratio: 1; border: 1px solid rgba(110,153,255,.18); border-radius: 50%; }
+    .orbit::before, .orbit::after { content: ""; position: absolute; border: 1px solid rgba(110,153,255,.14); border-radius: 50%; inset: 35px; }
+    .orbit::after { inset: 75px; }
+    .ai-card {
+      width: min(100%, 410px); min-height: 285px; position: relative; z-index: 1;
+      padding: 28px; border-radius: 26px; border: 1px solid rgba(165,193,255,.35);
+      background: linear-gradient(145deg, rgba(24,55,112,.88), rgba(13,24,55,.96));
+      box-shadow: 0 30px 90px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.1);
+      transform: rotate(-2deg);
+    }
+    .ai-card-top { display: flex; justify-content: space-between; align-items: center; color: #afc5f5; font-size: .82rem; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #61e7b2; display: inline-block; margin-right: 6px; }
+    .brain { display: grid; place-items: center; width: 116px; height: 116px; margin: 23px auto 16px; border-radius: 30px; background: radial-gradient(circle, #234cbb, #10234d 68%); border: 1px solid #507de0; box-shadow: 0 0 45px rgba(59,111,255,.3); font-size: 3.6rem; }
+    .ai-card h2 { text-align: center; margin: 0; font-size: 1.35rem; }
+    .ai-card p { text-align: center; margin: 4px 0 0; color: #aebfe0; font-size: .88rem; }
+    .floating-pill { position: absolute; z-index: 2; padding: 11px 15px; border-radius: 14px; background: #fff; color: #152448; font-size: .83rem; font-weight: 750; box-shadow: var(--shadow); }
+    .pill-one { top: 28px; left: 0; transform: rotate(-5deg); }
+    .pill-two { bottom: 25px; right: -4px; transform: rotate(4deg); }
+    .pill-three { bottom: 5px; left: 25px; color: #fff; background: linear-gradient(120deg, #456eff, #8b5cf6); }
+    .benefits { background: #fff; border-bottom: 1px solid var(--line); }
+    .benefit-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; padding-block: 34px; }
+    .benefit { display: flex; gap: 14px; align-items: flex-start; }
+    .icon-box { flex: 0 0 48px; width: 48px; height: 48px; display: grid; place-items: center; border-radius: 15px; background: #e8efff; color: #315fe6; font-size: 1.4rem; }
+    .benefit:nth-child(2) .icon-box { color: #7a3ce1; background: #f0e8ff; }
+    .benefit:nth-child(3) .icon-box { color: #078b75; background: #e0f8f0; }
+    .benefit:nth-child(4) .icon-box { color: #bd6b19; background: #fff0dd; }
+    .benefit h3 { margin: 0 0 4px; font-size: 1rem; }
+    .benefit p { margin: 0; color: var(--muted); font-size: .87rem; }
+    section.content-section { padding: 72px 0; }
+    .section-heading { text-align: center; margin: 0 auto 32px; max-width: 680px; }
+    .section-heading .kicker { text-transform: uppercase; color: #3e65d9; font-size: .76rem; letter-spacing: 1.8px; font-weight: 800; }
+    .section-heading h2 { margin: 7px 0; font-size: clamp(1.8rem, 3vw, 2.6rem); letter-spacing: -1px; }
+    .section-heading p { margin: 0; color: var(--muted); }
+    .subject-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .subject-card { padding: 22px; border: 1px solid #dce6fb; border-radius: 20px; background: linear-gradient(135deg, #e9f0ff, #f7f9ff); transition: transform .2s, box-shadow .2s; }
+    .subject-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .subject-card:nth-child(2) { background: linear-gradient(135deg, #f1e8ff, #faf7ff); border-color: #eadcfb; }
+    .subject-card:nth-child(3) { background: linear-gradient(135deg, #e0f7ef, #f5fffb); border-color: #d5f0e6; }
+    .subject-card:nth-child(4) { background: linear-gradient(135deg, #fff0df, #fffaf4); border-color: #f6e4cf; }
+    .subject-icon { font-size: 1.9rem; }
+    .subject-card h3 { margin: 10px 0 6px; font-size: 1.08rem; }
+    .subject-card p { min-height: 50px; margin: 0 0 15px; color: var(--muted); font-size: .88rem; }
+    .subject-card a { font-weight: 750; font-size: .88rem; color: #315fe6; }
+    .center-action { text-align: center; margin-top: 30px; }
+    .dark-btn { color: #fff; background: #12264b; }
+    .tools-section { background: #fff; }
+    .tool-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .tool-card { border: 1px solid var(--line); background: #fff; border-radius: 18px; padding: 25px; box-shadow: 0 8px 24px rgba(22,42,83,.04); }
+    .tool-card .icon-box { margin-bottom: 15px; }
+    .tool-card h3 { margin: 0 0 7px; }
+    .tool-card p { margin: 0; color: var(--muted); }
+    .cta { padding: 42px; display: flex; justify-content: space-between; align-items: center; gap: 25px; color: #fff; border-radius: 26px; background: radial-gradient(circle at 85% 10%, rgba(137,91,255,.45), transparent 30%), linear-gradient(115deg, #0b1b3a, #1a2f66); box-shadow: var(--shadow); }
+    .cta h2 { margin: 0 0 7px; font-size: clamp(1.5rem, 3vw, 2.2rem); }
+    .cta p { margin: 0; color: #c4d1eb; }
+    footer { color: #c4d0e7; background: #071329; padding: 35px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+    .footer-inner p { margin: 5px 0 0; color: #92a4c6; font-size: .85rem; }
+    .footer-links { display: flex; gap: 18px; font-size: .88rem; }
+    .footer-links a:hover { color: #fff; }
+    .empty-state { grid-column: 1 / -1; text-align: center; padding: 25px; color: var(--muted); }
+    @media (max-width: 950px) {
+      .nav-links { gap: 14px; }
+      .nav-actions .btn-outline { display: none; }
+      .hero-grid { gap: 20px; }
+      .benefit-grid { grid-template-columns: repeat(2, 1fr); }
+      .subject-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 700px) {
+      .container { width: min(100% - 28px, 1180px); }
+      .nav { min-height: 68px; }
+      .menu-toggle { display: block; }
+      .nav-links { display: none; position: absolute; top: 68px; left: 0; right: 0; padding: 18px 22px; background: #071329; flex-direction: column; align-items: flex-start; border-bottom: 1px solid #243653; }
+      .nav-links.open { display: flex; }
+      .nav-actions .btn { padding: 9px 13px; }
+      .brand { font-size: 1rem; }
+      .brand-mark { width: 37px; height: 37px; }
+      .hero-grid { grid-template-columns: 1fr; padding-block: 55px 60px; }
+      h1 { letter-spacing: -1.5px; }
+      .hero-art { min-height: 315px; margin-top: 8px; }
+      .ai-card { min-height: 250px; padding: 22px; }
+      .brain { width: 90px; height: 90px; font-size: 2.8rem; margin: 17px auto 12px; }
+      .pill-one { left: 0; top: 10px; }
+      .pill-two { right: 0; bottom: 16px; }
+      .benefit-grid, .subject-grid, .tool-grid { grid-template-columns: 1fr; }
+      .benefit-grid { gap: 22px; }
+      section.content-section { padding: 54px 0; }
+      .subject-card p { min-height: 0; }
+      .cta { flex-direction: column; align-items: flex-start; padding: 28px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="AI Knowledge Hub home">
+        <span class="brand-mark">✦</span>
+        <span>AI Knowledge Hub<small>LEARN · CREATE · GROW</small></span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a class="active" href="#home">Home</a>
+        <a href="#subjects">Subjects</a>
+        <a href="#notes">Notes</a>
+        <a href="#pdfs">PDFs</a>
+        <a href="#tools">Tools</a>
+        <a href="#about">About</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="btn btn-outline" href="#about">Explore</a>
+        <a class="btn btn-primary" href="#subjects">Get Started <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow"><span></span> YOUR PERSONAL AI LEARNING SPACE</div>
+          <h1>Your <span class="gradient-text">AI-Powered</span> Learning Companion</h1>
+          <p class="hero-copy">Make difficult topics easier to understand. Explore structured notes, discover study resources, and build your knowledge in Machine Learning, Deep Learning, NLP, Data Science, and more.</p>
+          <form class="search-box" id="searchForm" role="search">
+            <input id="subjectSearch" type="search" placeholder="Search a topic, subject or keyword..." aria-label="Search subjects" />
+            <button class="btn btn-primary" type="submit">Search <span aria-hidden="true">→</span></button>
+          </form>
+          <div class="tags" aria-label="Popular topics">
+            <a class="tag" href="#machine-learning">Machine Learning</a>
+            <a class="tag" href="#deep-learning">Deep Learning</a>
+            <a class="tag" href="#nlp">NLP</a>
+            <a class="tag" href="#data-science">Data Science</a>
+            <a class="tag" href="#tools">Python</a>
+            <a class="tag" href="#subjects">Explore more</a>
+          </div>
+        </div>
+        <div class="hero-art" aria-label="AI learning illustration">
+          <div class="orbit"></div>
+          <div class="floating-pill pill-one">✎ Smart study notes</div>
+          <div class="floating-pill pill-two">▤ PDF resources</div>
+          <div class="floating-pill pill-three">✦ Learn at your pace</div>
+          <div class="ai-card">
+            <div class="ai-card-top"><span>AI KNOWLEDGE HUB</span><span><i class="status-dot"></i>Ready to learn</span></div>
+            <div class="brain" aria-hidden="true">🧠</div>
+            <h2>Turn Curiosity Into Knowledge</h2>
+            <p>Understand more. Learn smarter. Keep growing.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="benefits" id="notes" aria-label="Platform benefits">
+      <div class="container benefit-grid">
+        <article class="benefit"><div class="icon-box">▤</div><div><h3>Smart Notes</h3><p>Clear, organized explanations designed to make complex concepts easier to study.</p></div></article>
+        <article class="benefit" id="pdfs"><div class="icon-box">⇩</div><div><h3>PDF Resources</h3><p>Keep useful learning material together and prepare resources for offline study.</p></div></article>
+        <article class="benefit"><div class="icon-box">✧</div><div><h3>AI-Assisted Learning</h3><p>Build a foundation with topic summaries, examples, and step-by-step guidance.</p></div></article>
+        <article class="benefit"><div class="icon-box">◎</div><div><h3>Grow Your Skills</h3><p>Explore modern technologies and develop knowledge for your next project.</p></div></article>
+      </div>
+    </section>
+
+    <section class="content-section" id="subjects">
+      <div class="container">
+        <div class="section-heading">
+          <div class="kicker">Explore subjects</div>
+          <h2>Learn What You Want</h2>
+          <p>Start with a subject, explore its core ideas, and keep building your understanding one topic at a time.</p>
+        </div>
+        <div class="subject-grid" id="subjectGrid">
+          <article class="subject-card" id="machine-learning" data-search="machine learning algorithms models supervised unsupervised"><div class="subject-icon">⚙️</div><h3>Machine Learning</h3><p>Explore algorithms, model training, evaluation, and real-world applications.</p><a href="#tools">Explore subject →</a></article>
+          <article class="subject-card" id="deep-learning" data-search="deep learning neural networks tensorflow pytorch"><div class="subject-icon">🕸️</div><h3>Deep Learning</h3><p>Learn neural networks, deep models, and the foundations of modern AI.</p><a href="#tools">Explore subject →</a></article>
+          <article class="subject-card" id="nlp" data-search="nlp natural language processing llm text transformers"><div class="subject-icon">💬</div><h3>Natural Language Processing</h3><p>Understand text processing, language models, embeddings, and transformers.</p><a href="#tools">Explore subject →</a></article>
+          <article class="subject-card" id="data-science" data-search="data science statistics visualization data analysis"><div class="subject-icon">📊</div><h3>Data Science</h3><p>Work with data analysis, statistics, visualization, and useful insights.</p><a href="#tools">Explore subject →</a></article>
+          <article class="subject-card" data-search="python programming coding basics"><div class="subject-icon">🐍</div><h3>Python Programming</h3><p>Build programming confidence with core concepts and practical examples.</p><a href="#tools">Explore subject →</a></article>
+          <article class="subject-card" data-search="artificial intelligence ai search reasoning agents"><div class="subject-icon">✨</div><h3>Artificial Intelligence</h3><p>Discover AI concepts, intelligent systems, search, and reasoning.</p><a href="#tools">Explore subject →</a></article>
+          <article class="subject-card" data-search="statistics probability distributions hypothesis testing"><div class="subject-icon">∑</div><h3>Statistics & Probability</h3><p>Review probability, distributions, inference, and statistical methods.</p><a href="#tools">Explore subject →</a></article>
+          <article class="subject-card" data-search="computer science algorithms data structures"><div class="subject-icon">⌘</div><h3>Computer Science</h3><p>Strengthen your fundamentals with algorithms and core computing ideas.</p><a href="#tools">Explore subject →</a></article>
+        </div>
+        <p id="searchMessage" role="status" aria-live="polite" hidden></p>
+        <div class="center-action"><a class="btn dark-btn" href="#tools">Explore Learning Tools <span aria-hidden="true">→</span></a></div>
+      </div>
+    </section>
+
+    <section class="content-section tools-section" id="tools">
+      <div class="container">
+        <div class="section-heading">
+          <div class="kicker">Study smarter</div>
+          <h2>Your Learning Toolkit</h2>
+          <p>A focused set of learning features for understanding difficult concepts and organizing study.</p>
+        </div>
+        <div class="tool-grid">
+          <article class="tool-card"><div class="icon-box">✎</div><h3>Notes & Summaries</h3><p>Turn a broad topic into a clear outline of concepts, definitions, and key points.</p></article>
+          <article class="tool-card"><div class="icon-box">▤</div><h3>Study PDF Library</h3><p>Organize course resources and reference material in one convenient learning space.</p></article>
+          <article class="tool-card"><div class="icon-box">✦</div><h3>Practice & Revision</h3><p>Use examples and review prompts to reinforce what you have learned.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" id="about">
+      <div class="container">
+        <div class="cta">
+          <div><h2>Make your next big topic feel simple.</h2><p>Explore new ideas, organize your learning, and take the next step with AI Knowledge Hub.</p></div>
+          <a class="btn btn-primary" href="#subjects">Start Exploring <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div><a class="brand" href="#home"><span class="brand-mark">✦</span><span>AI Knowledge Hub<small>LEARN · CREATE · GROW</small></span></a><p>One place to explore ideas and grow your knowledge.</p></div>
+      <div class="footer-links"><a href="#home">Home</a><a href="#subjects">Subjects</a><a href="#tools">Tools</a><a href="#about">About</a></div>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
+    });
+
+    navLinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    const searchForm = document.getElementById("searchForm");
+    const searchInput = document.getElementById("subjectSearch");
+    const subjectCards = [...document.querySelectorAll(".subject-card")];
+    const searchMessage = document.getElementById("searchMessage");
+
+    searchForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const query = searchInput.value.trim().toLowerCase();
+      let matches = 0;
+
+      subjectCards.forEach((card) => {
+        const searchableText = (card.innerText + " " + (card.dataset.search || "")).toLowerCase();
+        const matched = !query || searchableText.includes(query);
+        card.hidden = !matched;
+        if (matched) matches++;
+      });
+
+      searchMessage.hidden = false;
+      searchMessage.style.textAlign = "center";
+      searchMessage.style.marginTop = "20px";
+      searchMessage.textContent = query
+        ? (matches ? `${matches} subject${matches === 1 ? "" : "s"} found for “${searchInput.value.trim()}”.` : `No subjects found for “${searchInput.value.trim()}”. Try Python, NLP, AI, or statistics.`)
+        : "Showing all subjects.";
+      document.getElementById("subjects").scrollIntoView({ behavior: "smooth" });
+    });
+
+    searchInput.addEventListener("input", () => {
+      if (!searchInput.value.trim()) {
+        subjectCards.forEach((card) => card.hidden = false);
+        searchMessage.hidden = true;
+      }
+    });
+  </script>
+</body>
+</html>
